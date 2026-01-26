@@ -16,7 +16,7 @@ export default function ChatBox() {
     return (
         <div className="flex-1 flex flex-col bg-gray-900">
             <div className="p-4 border-b border-gray-700 text-white">
-                {selectedUser.email}
+                {selectedUser.username}
             </div>
 
             <MessageList />

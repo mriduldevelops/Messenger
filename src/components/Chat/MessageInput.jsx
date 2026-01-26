@@ -41,6 +41,7 @@ export default function MessageInput() {
     await addDoc(collection(chatRef, "messages"), {
       senderId: user.uid,
       text,
+      read: false,
       createdAt: serverTimestamp(),
     });
 

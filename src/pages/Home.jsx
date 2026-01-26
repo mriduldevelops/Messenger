@@ -28,25 +28,25 @@ import { useAuth } from "../context/AuthContext";
 import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../firebase/firestore";
 export default function Home() {
-    const { user } = useAuth();
-    const handleLogout = async () => {
-        await updateDoc(doc(db, "users", user.uid), {
-            online: false,
-            lastSeen: serverTimestamp(),
-        });
-        await signOut(auth);
+    // const { user } = useAuth();
+    // const handleLogout = async () => {
+    //     await updateDoc(doc(db, "users", user.uid), {
+    //         online: false,
+    //         lastSeen: serverTimestamp(),
+    //     });
+    //     await signOut(auth);
 
-    }
+    // }
     return (
         <div className="h-screen flex">
             <Sidebar />
             <ChatBox />
-            <button
+            {/* <button
                 onClick={handleLogout}
                 className="mt-4 bg-red-600 px-4 py-2 rounded"
             >
                 Logout
-            </button>
+            </button> */}
         </div>
     );
 }

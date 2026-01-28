@@ -36,29 +36,6 @@ export default function MessageList() {
     return () => unsub();
   }, [chatId]);
 
-  useEffect(() => {
-  if (!selectedUser) return;
-
-  const markAsRead = async () => {
-    const q = query(
-      collection(db, "chats", chatId, "messages"),
-      where("senderId", "!=", user.uid),
-      where("read", "==", false)
-    );
-
-    const snapshot = await getDocs(q);
-    const batch = writeBatch(db);
-
-    snapshot.docs.forEach((doc) => {
-      batch.update(doc.ref, { read: true });
-    });
-
-    await batch.commit();
-  };
-
-  markAsRead();
-}, [chatId, selectedUser]);
-
   // 🔥 Auto-scroll when new message arrives
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -71,10 +48,16 @@ export default function MessageList() {
       .toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
-  const isSameDay = (d1, d2) =>
-    d1.getFullYear() === d2.getFullYear() &&
-    d1.getMonth() === d2.getMonth() &&
-    d1.getDate() === d2.getDate();
+  const isSameDay = (d1, d2) => {
+    if (!d1 || !d2) return false;
+
+    return (
+      d1.getFullYear() === d2.getFullYear() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate()
+    );
+  };
+
 
   const formatDateLabel = (date) => {
     const today = new Date();
@@ -98,8 +81,7 @@ export default function MessageList() {
         const prevMsg = messages[i - 1];
         const prevDate = prevMsg?.createdAt?.toDate();
 
-        const showDate =
-          !prevDate || !isSameDay(msgDate, prevDate);
+        const showDate = msgDate && (!prevDate || !isSameDay(msgDate, prevDate));
 
         return (
           <div key={i}>
@@ -115,12 +97,32 @@ export default function MessageList() {
             {/* 💬 Message Bubble */}
             <div
               key={i}
-              className={`max-w-xl w-fit p-3 rounded-xl text-white relative ${msg.senderId === user.uid
+              className={`max-w-xl w-fit rounded-xl text-white relative ${msg.senderId === user.uid
                 ? "bg-blue-600 ml-auto"
                 : "bg-gray-700"
                 }`}
             >
-              <p className="pr-14">{msg.text}</p>
+              {/* 📝 Text message */}
+              {msg.type === "text" && (
+                <p className="pr-10 p-3">{msg.text}</p>
+              )}
+              {/* 📷 Image message */}
+              {msg.type === "image" && (
+                <img
+                  src={msg.mediaUrl}
+                  alt="sent"
+                  className="p-1 pb-5 rounded-xl max-w-[240px] max-h-[300px] object-cover"
+                />
+              )}
+
+              {/* 🎥 Video message */}
+              {msg.type === "video" && (
+                <video
+                  src={msg.mediaUrl}
+                  controls
+                  className="p-1 pb-5 rounded-xl max-w-[240px]"
+                />
+              )}
               <span className="absolute bottom-1 right-2 text-xs text-gray-200">
                 {formatTime(msg.createdAt)}
               </span>

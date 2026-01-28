@@ -84,6 +84,7 @@ import { db } from "../../firebase/firestore";
 import { useAuth } from "../../context/AuthContext";
 import { useChat } from "../../context/ChatContext";
 import { uploadToCloudinary } from "../../utils/uploadToCloudinary";
+import { Camera, LoaderCircle, SendHorizontal } from "lucide-react";
 
 export default function MessageInput() {
   const [text, setText] = useState("");
@@ -204,6 +205,7 @@ export default function MessageInput() {
               onClick={() => {
                 setFile(null);
                 setPreviewUrl(null);
+                setLoading(false);
               }}
               className="absolute -top-2 -right-2 bg-black text-white rounded-full px-2"
             >
@@ -218,7 +220,7 @@ export default function MessageInput() {
         className="p-4 flex gap-2 border-t border-gray-700 items-center"
       >
         <label className="cursor-pointer text-gray-300 text-xl">
-          📎
+          <Camera />
           <input
             type="file"
             accept="image/*,video/*"
@@ -239,9 +241,9 @@ export default function MessageInput() {
         {/* 🚀 Send */}
         <button
           disabled={loading}
-          className="bg-blue-600 px-4 py-2 rounded text-white"
+          className="bg-blue-600 px-4 py-2 rounded text-white cursor-pointer"
         >
-          {loading ? "Sending..." : "Send"}
+          {loading ? <div className="animate-spin"><LoaderCircle /></div> : <SendHorizontal />}
         </button>
       </form>
     </>

@@ -17,6 +17,8 @@ export default function MessageList() {
   const { selectedUser } = useChat();
   const [messages, setMessages] = useState([]);
   const bottomRef = useRef(null);
+  const [viewer, setViewer] = useState(null);
+
 
   const chatId =
     user.uid > selectedUser.uid
@@ -73,9 +75,50 @@ export default function MessageList() {
       year: "numeric",
     });
   };
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") setViewer(null);
+    };
+
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
+
 
   return (
     <div className="flex-1 p-4 overflow-y-auto space-y-2">
+      {/* 🔍 Fullscreen Media Viewer */}
+      {viewer && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center">
+          {/* ❌ Close button */}
+          <button
+            onClick={() => setViewer(null)}
+            className="absolute top-4 right-4 text-white text-3xl"
+          >
+            ✕
+          </button>
+
+          {/* 🖼 Image */}
+          {viewer.type === "image" && (
+            <img
+              src={viewer.url}
+              alt="fullscreen"
+              className="max-h-[90vh] max-w-[90vw] rounded-lg"
+            />
+          )}
+
+          {/* 🎥 Video */}
+          {viewer.type === "video" && (
+            <video
+              src={viewer.url}
+              controls
+              autoPlay
+              className="max-h-[90vh] max-w-[90vw] rounded-lg"
+            />
+          )}
+        </div>
+      )}
+
       {messages.map((msg, i) => {
         const msgDate = msg.createdAt?.toDate();
         const prevMsg = messages[i - 1];
@@ -104,13 +147,16 @@ export default function MessageList() {
             >
               {/* 📝 Text message */}
               {msg.type === "text" && (
-                <p className="pr-10 p-3">{msg.text}</p>
+                <p className="pr-14 p-3">{msg.text}</p>
               )}
               {/* 📷 Image message */}
               {msg.type === "image" && (
                 <img
                   src={msg.mediaUrl}
                   alt="sent"
+                  onClick={() =>
+                    setViewer({ type: "image", url: msg.mediaUrl })
+                  }
                   className="p-1 pb-5 rounded-xl max-w-[240px] max-h-[300px] object-cover"
                 />
               )}
@@ -120,6 +166,9 @@ export default function MessageList() {
                 <video
                   src={msg.mediaUrl}
                   controls
+                  onClick={() =>
+                    setViewer({ type: "video", url: msg.mediaUrl })
+                  }
                   className="p-1 pb-5 rounded-xl max-w-[240px]"
                 />
               )}

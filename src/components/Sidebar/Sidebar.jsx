@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useChat } from "../../context/ChatContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/auth";
+import { LogOut } from "lucide-react";
 
 export default function Sidebar() {
     const { user } = useAuth();
@@ -33,14 +34,14 @@ export default function Sidebar() {
     }, [user.uid]);
 
     return (
-        <div className="w-72 bg-gray-800 text-white p-4 relative">
+        <div className="w-screen bg-gray-800 text-white p-4 relative flex items-center flex-col">
             <h2 className="text-lg font-bold mb-4">Users</h2>
 
             {users.map((u) => (
                 <div
                     key={u.uid}
                     onClick={() => setSelectedUser(u)}
-                    className="p-2 mb-2 bg-gray-700 rounded cursor-pointer hover:bg-gray-600"
+                    className="p-2 mb-2 bg-gray-700 rounded cursor-pointer hover:bg-gray-600 w-full"
                 >
                     <div className="flex items-center justify-between">
                         <span>{u.fullName}</span>
@@ -55,9 +56,9 @@ export default function Sidebar() {
             ))}
             <button
                 onClick={handleLogout}
-                className="mt-4 bg-red-600 px-4 py-2 rounded fixed bottom-5 w-64 "
+                className="mt-4 bg-red-600 px-4 py-2 rounded fixed bottom-5 w-[90%] flex justify-center items-center gap-2"
             >
-                Logout
+                <span className="text-lg">Logout</span> <LogOut size={20}/>
             </button>
         </div>
     );

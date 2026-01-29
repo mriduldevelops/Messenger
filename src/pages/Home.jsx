@@ -39,7 +39,7 @@ export default function Home() {
     // }
     return (
         <div className="h-screen flex">
-            <Sidebar />
+            {/* <Sidebar /> */}
             <ChatBox />
             {/* <button
                 onClick={handleLogout}

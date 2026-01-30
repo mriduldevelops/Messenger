@@ -6,11 +6,13 @@ import { useChat } from "../../context/ChatContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/auth";
 import { LogOut } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
     const { user } = useAuth();
     const [users, setUsers] = useState([]);
     const { setSelectedUser } = useChat();
+    const navigate = useNavigate();
 
     const handleLogout = async () => {
         await updateDoc(doc(db, "users", user.uid), {
@@ -34,13 +36,16 @@ export default function Sidebar() {
     }, [user.uid]);
 
     return (
-        <div className="w-screen bg-gray-800 text-white p-4 relative flex items-center flex-col">
+        <div className="w-screen min-h-screen bg-gray-800 text-white p-4 relative flex items-center flex-col">
             <h2 className="text-lg font-bold mb-4">Users</h2>
 
             {users.map((u) => (
                 <div
                     key={u.uid}
-                    onClick={() => setSelectedUser(u)}
+                    onClick={() => {
+                        setSelectedUser(u);
+                        navigate('/chat');
+                    }}
                     className="p-2 mb-2 bg-gray-700 rounded cursor-pointer hover:bg-gray-600 w-full"
                 >
                     <div className="flex items-center justify-between">
@@ -58,7 +63,7 @@ export default function Sidebar() {
                 onClick={handleLogout}
                 className="mt-4 bg-red-600 px-4 py-2 rounded fixed bottom-5 w-[90%] flex justify-center items-center gap-2"
             >
-                <span className="text-lg">Logout</span> <LogOut size={20}/>
+                <span className="text-lg">Logout</span> <LogOut size={20} />
             </button>
         </div>
     );

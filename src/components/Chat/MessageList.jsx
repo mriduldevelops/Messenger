@@ -140,14 +140,14 @@ export default function MessageList() {
             {/* 💬 Message Bubble */}
             <div
               key={i}
-              className={`max-w-xl w-fit rounded-xl text-white relative ${msg.senderId === user.uid
+              className={`max-w-3xs w-fit rounded-xl text-white relative ${msg.senderId === user.uid
                 ? "bg-blue-600 ml-auto"
                 : "bg-gray-700"
                 }`}
             >
               {/* 📝 Text message */}
               {msg.type === "text" && (
-                <p className="pr-14 p-3">{msg.text}</p>
+                <p className="px-3 py-1">{msg.text}</p>
               )}
               {/* 📷 Image message */}
               {msg.type === "image" && (
@@ -157,7 +157,7 @@ export default function MessageList() {
                   onClick={() =>
                     setViewer({ type: "image", url: msg.mediaUrl })
                   }
-                  className="p-1 pb-5 rounded-xl max-w-[240px] max-h-[300px] object-cover"
+                  className="p-1 rounded-xl max-w-[240px] max-h-[300px] object-cover"
                 />
               )}
 
@@ -169,12 +169,14 @@ export default function MessageList() {
                   onClick={() =>
                     setViewer({ type: "video", url: msg.mediaUrl })
                   }
-                  className="p-1 pb-5 rounded-xl max-w-[240px]"
+                  className="p-1 rounded-xl max-w-[240px]"
                 />
               )}
-              <span className="absolute bottom-1 right-2 text-xs text-gray-200">
+              <div className="w-full flex justify-end px-3 pb-1">
+              <span className="text-xs text-gray-200">
                 {formatTime(msg.createdAt)}
               </span>
+              </div>
             </div>
           </div>
         );

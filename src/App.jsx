@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import ChatList from './pages/ChatList';
 import ChatBox from './components/Chat/ChatBox';
+import Settings from './pages/Settings';
 function App() {
   const { user } = useAuth();
   return (
@@ -16,6 +17,7 @@ function App() {
           element={user ? <ChatList /> : <Navigate to="/login" />}
         />
         <Route path="/chat" element={<ChatBox />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
       </Routes>

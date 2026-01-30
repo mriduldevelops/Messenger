@@ -23,10 +23,15 @@ export default function ChatBox() {
                 <button onClick={() => {
                     setSelectedUser(null);
                     navigate('/');
-                }} className="text-blue-600"><ChevronLeft size={20} /></button>
-                <span className="text-lg">
-                    {selectedUser.username}
-                </span>
+                }} className="text-blue-600"><ChevronLeft size={24} /></button>
+                <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full overflow-hidden">
+                        <img src={selectedUser.profilePhoto || "https://cdn-icons-png.flaticon.com/512/847/847969.png"} alt="user-fprofile" className="h-full w-full object-cover" />
+                    </div>
+                    <span className="text-xl">
+                        {selectedUser.username}
+                    </span>
+                </div>
             </div>
 
             <MessageList />

@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase/auth";
-import { doc, updateDoc, serverTimestamp } from "firebase/firestore";
+import { doc, updateDoc, serverTimestamp, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firestore";
 
 const AuthContext = createContext(null);
@@ -13,14 +13,28 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
-        await updateDoc(doc(db, "users", currentUser.uid), {
-          online: true,
-          lastSeen: serverTimestamp(),
-        });
-        setUser(currentUser);
+        try {
+          const ref = doc(db, "users", currentUser.uid);
+
+          // Make sure user doc exists before updating
+          const snap = await getDoc(ref);
+
+          if (snap.exists()) {
+            await updateDoc(ref, {
+              online: true,
+              lastSeen: serverTimestamp(),
+            });
+          }
+
+          setUser({ ...currentUser, ...snap.data() });
+        } catch (err) {
+          console.log("Error updating user online status:", err.message);
+          setUser(currentUser);
+        }
       } else {
         setUser(null);
       }
+
       setLoading(false);
     });
 

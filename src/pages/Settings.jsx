@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { useState, useEffect } from "react";
+import { doc, serverTimestamp, updateDoc, getDoc } from "firebase/firestore";
 import { db } from "../firebase/firestore";
 import { useAuth } from "../context/AuthContext";
 import { uploadToCloudinary } from "../utils/uploadToCloudinary";
@@ -10,52 +10,73 @@ import { auth } from "../firebase/auth";
 
 export default function Settings() {
     const { user } = useAuth();
-    const [fullName, setFullName] = useState(user.fullName || "");
-    const [profilePhoto, setProfilePhoto] = useState(user.profilePhoto || "");
+    const [fullName, setFullName] = useState("");
+    const [profilePhoto, setProfilePhoto] = useState("");
+    const [newPhoto, setNewPhoto] = useState(null);
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
-    const handleSave = async () => {
-        try {
-            setLoading(true);
+
+    // ----------------- FETCH USER DETAILS -----------------
+    useEffect(() => {
+        const fetchUserData = async () => {
+            if (!user?.uid) return;
 
             const userRef = doc(db, "users", user.uid);
+            const snap = await getDoc(userRef);
 
-            await updateDoc(userRef, {
+            if (snap.exists()) {
+                const data = snap.data();
+                setFullName(data.fullName || "");
+                setProfilePhoto(data.profilePhoto || "");
+            }
+        };
+
+        fetchUserData();
+    }, [user]);
+
+
+    // ----------------- UPDATE PROFILE -----------------
+    const handleSave = async () => {
+        setLoading(true);
+
+        try {
+            let uploadedImageUrl = profilePhoto;
+
+            // if user selected a new image
+            if (newPhoto) {
+                uploadedImageUrl = await uploadToCloudinary(newPhoto);
+            }
+
+            await updateDoc(doc(db, "users", user.uid), {
                 fullName,
-                profilePhoto,
-                lastUpdated: new Date(),
+                profilePhoto: uploadedImageUrl,
+                updatedAt: serverTimestamp(),
             });
 
-            navigate('/')
-        } catch (err) {
-            console.log(err);
+            alert("Profile updated!");
+            setNewPhoto(null);
+
+        } catch (error) {
+            alert(error.message);
         } finally {
             setLoading(false);
         }
     };
 
-    // When user selects a new image
-    const handlePhotoChange = async (e) => {
-        const file = e.target.files[0];
-        if (!file) return;
-        setLoading(true);
 
-        const url = await uploadToCloudinary(file);
-        setProfilePhoto(url);
-        setLoading(false);
-    };
-
+    // ----------------- LOGOUT -----------------
     const handleLogout = async () => {
         await updateDoc(doc(db, "users", user.uid), {
             online: false,
             lastSeen: serverTimestamp(),
         });
-        await signOut(auth);
-        navigate('/login');
-    }
 
-    // console.log(fullName, profilePhoto)
+        await signOut(auth);
+        navigate("/login");
+    };
+
+
     return (
         <div className="min-h-screen bg-gray-900 flex items-center justify-center p-6">
             <div className="bg-gray-800 p-6 rounded-lg w-full max-w-md space-y-6">
@@ -65,8 +86,10 @@ export default function Settings() {
                 <div className="flex flex-col items-center">
                     <img
                         src={
-                            profilePhoto ||
-                            "https://cdn-icons-png.flaticon.com/512/847/847969.png"
+                            newPhoto
+                                ? URL.createObjectURL(newPhoto)
+                                : profilePhoto ||
+                                "https://cdn-icons-png.flaticon.com/512/847/847969.png"
                         }
                         className="w-32 h-32 rounded-full object-cover border border-gray-600"
                     />
@@ -77,7 +100,7 @@ export default function Settings() {
                             type="file"
                             className="hidden"
                             accept="image/*"
-                            onChange={handlePhotoChange}
+                            onChange={(e) => setNewPhoto(e.target.files[0])}
                         />
                     </label>
                 </div>
@@ -102,6 +125,8 @@ export default function Settings() {
                     {loading ? "Saving..." : "Save Changes"}
                 </button>
             </div>
+
+            {/* LOGOUT BUTTON */}
             <button
                 onClick={handleLogout}
                 className="mt-4 bg-red-600 px-4 py-2 rounded fixed bottom-5 w-[90%] flex justify-center items-center gap-2"

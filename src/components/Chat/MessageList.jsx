@@ -125,7 +125,7 @@ export default function MessageList() {
   }, []);
 
   return (
-    <div className="flex-1 p-4 overflow-y-auto space-y-2 overflow-x-hidden">
+    <div className="flex-1 p-4 overflow-y-auto space-y-2 overflow-x-hidden bg-zinc-900">
       {viewer && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-90 flex items-center justify-center">
           <button
@@ -153,15 +153,15 @@ export default function MessageList() {
           <div key={msg.id || i}>
             {showDate && msgDate && (
               <div className="flex justify-center my-4">
-                <span className="bg-gray-800 text-gray-300 text-xs px-3 py-1 rounded-full">
+                <span className="bg-zinc-800 text-gray-300 text-xs px-3 py-1 rounded-full">
                   {formatDateLabel(msgDate)}
                 </span>
               </div>
             )}
 
             <div
-              className={`max-w-3xs w-fit rounded-xl text-white relative ${
-                msg.senderId === user.uid ? "bg-blue-600 ml-auto" : "bg-gray-700"
+              className={`max-w-3xs w-fit rounded-xl relative text-white ${
+                msg.senderId === user.uid ? "bg-[#245346] ml-auto " : "bg-[#3d3c3f]"
               }`}
             >
               {msg.type === "text" && <p className="px-3 py-1">{msg.text}</p>}

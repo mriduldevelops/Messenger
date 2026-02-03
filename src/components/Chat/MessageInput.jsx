@@ -234,14 +234,14 @@ export default function MessageInput() {
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}
-          className="flex-1 p-2 rounded bg-gray-800 text-white"
+          className="flex-1 p-2 rounded bg-[#3d3c3f] text-white"
           placeholder="Type a message..."
         />
 
         {/* 🚀 Send */}
         <button
           disabled={loading}
-          className="bg-blue-600 px-4 py-2 rounded text-white cursor-pointer"
+          className="bg-[#245346] px-4 py-2 rounded text-white cursor-pointer"
         >
           {loading ? <div className="animate-spin"><LoaderCircle /></div> : <SendHorizontal />}
         </button>
@@ -250,3 +250,4 @@ export default function MessageInput() {
   );
 }
 
+ 

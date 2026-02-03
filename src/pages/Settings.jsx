@@ -78,8 +78,8 @@ export default function Settings() {
 
 
     return (
-        <div className="min-h-screen bg-gray-900 flex items-center justify-center p-6">
-            <div className="bg-gray-800 p-6 rounded-lg w-full max-w-md space-y-6">
+        <div className="min-h-screen bg-zinc-900 flex items-center justify-center p-6 relative">
+            <div className="bg-zinc-800 p-6 rounded-lg w-full max-w-md space-y-6">
                 <h2 className="text-white text-2xl font-bold text-center">Settings</h2>
 
                 {/* PROFILE PHOTO */}
@@ -94,7 +94,7 @@ export default function Settings() {
                         className="w-32 h-32 rounded-full object-cover border border-gray-600"
                     />
 
-                    <label className="mt-4 text-green-400 cursor-pointer hover:underline">
+                    <label className="mt-4 text-[#2f856c] cursor-pointer hover:underline">
                         Change Photo
                         <input
                             type="file"
@@ -110,7 +110,7 @@ export default function Settings() {
                     <label className="text-gray-300">Full Name</label>
                     <input
                         type="text"
-                        className="w-full mt-1 p-2 rounded bg-gray-700 text-white"
+                        className="w-full mt-1 p-2 rounded bg-[#3d3c3f] text-white"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
                     />
@@ -120,7 +120,7 @@ export default function Settings() {
                 <button
                     onClick={handleSave}
                     disabled={loading}
-                    className="w-full bg-green-600 hover:bg-green-700 p-2 rounded text-white"
+                    className="w-full bg-[#245346] hover:bg-[#316b5b] p-2 rounded text-white"
                 >
                     {loading ? "Saving..." : "Save Changes"}
                 </button>
@@ -129,9 +129,9 @@ export default function Settings() {
             {/* LOGOUT BUTTON */}
             <button
                 onClick={handleLogout}
-                className="mt-4 bg-red-600 px-4 py-2 rounded fixed bottom-5 w-[90%] flex justify-center items-center gap-2"
+                className="mt-4 text-red-800 font-bold px-4 py-2 rounded fixed bottom-5 w-[88%] flex justify-center items-center gap-2"
             >
-                <span className="text-lg">Logout</span> <LogOut size={20} />
+                <span className="text-lg">Logout</span> <LogOut strokeWidth={3} size={20} />
             </button>
         </div>
     );

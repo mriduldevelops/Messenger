@@ -20,7 +20,7 @@ export default function Sidebar() {
         if (!user?.uid) return;
 
         const q = query(collection(db, "userChats", user.uid, "chats"));
-        
+
         const unsub = onSnapshot(q, (snap) => {
             const ids = snap.docs.map(d => ({
                 chatId: d.id,
@@ -36,8 +36,8 @@ export default function Sidebar() {
         if (!searchText.trim()) return setSearchResults([]);
         const q = query(
             collection(db, "users"),
-            where("username", ">=", searchText),
-            where("username", "<=", searchText + "\uf8ff")
+            where("username", ">=", searchText.toLowerCase()),
+            where("username", "<=", searchText.toLowerCase() + "\uf8ff")
         );
         const snap = await getDocs(q);
         setSearchResults(snap.docs.map(d => d.data()).filter(u => u.uid !== user.uid));
@@ -45,7 +45,7 @@ export default function Sidebar() {
 
     const startChat = async (otherUser) => {
         const chatId = user.uid > otherUser.uid ? `${user.uid}_${otherUser.uid}` : `${otherUser.uid}_${user.uid}`;
-        
+
         // Initialize chat doc
         await setDoc(doc(db, "chats", chatId), {
             users: [user.uid, otherUser.uid],
@@ -104,10 +104,10 @@ export default function Sidebar() {
                         <p className="text-zinc-500 text-sm">No chats yet.</p>
                     ) : (
                         chatIds.map((item) => (
-                            <ChatItem 
-                                key={item.chatId} 
-                                chatId={item.chatId} 
-                                otherUid={item.otherUid} 
+                            <ChatItem
+                                key={item.chatId}
+                                chatId={item.chatId}
+                                otherUid={item.otherUid}
                             />
                         ))
                     )}

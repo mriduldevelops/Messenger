@@ -42,10 +42,10 @@ export default function ChatBox() {
   };
 
   return (
-    <div className="h-screen flex-1 flex flex-col bg-zinc-900">
+    <div className="h-screen flex-1 flex flex-col bg-zinc-900 relative">
 
       {/* HEADER */}
-      <div className="p-4 border-b border-gray-700 text-white flex items-center justify-between">
+      <div className="p-4 border-b border-gray-700 text-white flex items-center justify-between fixed top-0 w-screen z-20 bg-zinc-900">
 
         {/* LEFT SIDE */}
         <div className="flex items-center gap-2">
@@ -105,10 +105,12 @@ export default function ChatBox() {
           </div>
         )}
       </div>
+      <div className="my-6"></div>
 
       {/* MESSAGES & INPUT */}
       <MessageList />
       <MessageInput />
+      <div className="my-8"></div>
     </div>
   );
 }

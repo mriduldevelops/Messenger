@@ -181,7 +181,7 @@ export default function MessageInput() {
 
 
   return (
-    <>
+    <div className="fixed bottom-0 w-screen bg-zinc-900">
       {/* 📷 Media Preview */}
       {previewUrl && (
         <div className="p-3 border-t border-gray-700 bg-gray-900">
@@ -246,7 +246,7 @@ export default function MessageInput() {
           {loading ? <div className="animate-spin"><LoaderCircle /></div> : <SendHorizontal />}
         </button>
       </form>
-    </>
+    </div>
   );
 }
 

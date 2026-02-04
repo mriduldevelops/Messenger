@@ -132,7 +132,7 @@ export default function Settings() {
             {/* LOGOUT BUTTON */}
             <button
                 onClick={handleLogout}
-                className="mt-4 text-red-800 font-bold px-4 py-2 rounded fixed bottom-5 w-[88%] flex justify-center items-center gap-2"
+                className="mt-4 text-[#EF3340] font-bold px-4 py-2 rounded fixed bottom-5 w-[88%] flex justify-center items-center gap-2"
             >
                 <span className="text-lg">Logout</span> <LogOut strokeWidth={3} size={20} />
             </button>

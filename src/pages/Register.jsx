@@ -69,7 +69,7 @@ export default function Register() {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-gray-900">
+    <div className="h-screen flex items-center justify-center bg-zinc-900">
 
       {/* ---------- FULL SCREEN LOADER ---------- */}
       {loadingScreen ? (
@@ -80,7 +80,7 @@ export default function Register() {
         /* ---------- REGISTER FORM ---------- */
         <form
           onSubmit={handleRegister}
-          className="bg-gray-800 p-6 rounded w-80 space-y-4"
+          className="bg-zinc-800 p-6 rounded w-80 space-y-4"
         >
           <h2 className="text-white text-2xl font-bold text-center">
             Register
@@ -89,7 +89,7 @@ export default function Register() {
           <input
             type="text"
             placeholder="Full Name"
-            className="w-full p-2 rounded bg-gray-700 text-white"
+            className="w-full p-2 rounded bg-[#3d3c3f] text-white"
             onChange={(e) => setFullName(e.target.value)}
             required
           />
@@ -98,7 +98,7 @@ export default function Register() {
             <input
               type="text"
               placeholder="Username"
-              className="w-full p-2 rounded bg-gray-700 text-white"
+              className="w-full p-2 rounded bg-[#3d3c3f] text-white"
               onChange={(e) => checkUsername(e.target.value)}
               required
             />
@@ -112,7 +112,7 @@ export default function Register() {
           <input
             type="email"
             placeholder="Email"
-            className="w-full p-2 rounded bg-gray-700 text-white"
+            className="w-full p-2 rounded bg-[#3d3c3f] text-white"
             onChange={(e) => setEmail(e.target.value)}
             required
           />
@@ -120,14 +120,14 @@ export default function Register() {
           <input
             type="password"
             placeholder="Password"
-            className="w-full p-2 rounded bg-gray-700 text-white"
+            className="w-full p-2 rounded bg-[#3d3c3f] text-white"
             onChange={(e) => setPassword(e.target.value)}
             required
           />
 
           <button
             disabled={usernameTaken || loading}
-            className={`w-full p-2 rounded text-white ${usernameTaken ? "bg-gray-500 cursor-not-allowed" : "bg-blue-600"
+            className={`w-full p-2 rounded text-white ${usernameTaken ? "bg-gray-500 cursor-not-allowed" : "bg-[#245346]"
               }`}
           >
             {loading ? "Creating account..." : "Register"}
@@ -135,7 +135,7 @@ export default function Register() {
 
           <p className="text-white text-sm">
             Already have an account?
-            <Link to="/login" className="text-green-600 ml-1">
+            <Link to="/login" className="text-[#3c8b75] ml-1">
               Login here
             </Link>
           </p>

@@ -17,6 +17,8 @@ export default function ChatBox() {
         );
     }
 
+    console.log(selectedUser)
+
     return (
         <div className="h-screen flex-1 flex flex-col bg-zinc-900">
             <div className="p-4 border-b border-gray-700 text-white flex  items-center gap-2">
@@ -29,7 +31,7 @@ export default function ChatBox() {
                         <img src={selectedUser.profilePhoto || "https://cdn-icons-png.flaticon.com/512/847/847969.png"} alt="user-fprofile" className="h-full w-full object-cover" />
                     </div>
                     <span className="text-xl">
-                        {selectedUser.username}
+                        {selectedUser.fullName}
                     </span>
                 </div>
             </div>

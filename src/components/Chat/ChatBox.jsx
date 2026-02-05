@@ -55,7 +55,7 @@ export default function ChatBox() {
               handleCancelDelete()
               navigate("/");
             }}
-            className="text-[#245346]"
+            className="text-[#fab400]"
           >
             <ChevronLeft size={26} />
           </button>
@@ -76,7 +76,7 @@ export default function ChatBox() {
           )}
 
           {deleteMode && (
-            <span className="text-lg text-red-400">
+            <span className="text-lg text-[#fa6450]">
               {selectedMessages.length} selected
             </span>
           )}
@@ -95,7 +95,7 @@ export default function ChatBox() {
               Clear All
             </button>
 
-            <button className="text-red-400" onClick={handleDeleteSelected}>
+            <button className="text-[#fa6450]" onClick={handleDeleteSelected}>
               <Trash2 size={20} />
             </button>
 

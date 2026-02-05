@@ -210,7 +210,7 @@ export default function MessageList() {
             <div
               className={`relative max-w-3xs w-fit rounded-xl text-white p-0
                 ${msg.senderId === user.uid ? "bg-[#245346] ml-auto" : "bg-[#3d3c3f]"}
-                ${selectedMessages.includes(msg.id) ? "opacity-80 bg-[#EF3340] cursor-pointer" : ""}
+                ${selectedMessages.includes(msg.id) ? "opacity-80 bg-[#fa6450] cursor-pointer" : ""}
               `}
               onClick={() => toggleSelect(msg.id)}
             >

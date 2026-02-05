@@ -79,10 +79,10 @@ export default function Settings() {
 
     return (
         <div className="min-h-screen bg-zinc-900 flex items-center justify-center p-6 relative">
-            <div className="mt-4 text-[#2f856c] font-bold px-4 py-2 rounded fixed top-5 w-[88%] flex justify-start items-center gap-2">
-            <Link to={'/'} className="flex items-center gap-1"><ChevronLeft/> Back</Link>
+            <div className="mt-4 text-[#fa6450] font-bold px-4 py-2 rounded fixed top-5 w-[88%] flex justify-start items-center gap-1">
+            <Link to={'/'} className="flex items-center"><ChevronLeft/> Back</Link>
             </div>
-            <div className="bg-zinc-800 p-6 rounded-lg w-full max-w-md space-y-6">
+            <div className="bg-zinc-800 p-6 rounded-xl w-full max-w-md space-y-6">
                 <h2 className="text-white text-2xl font-bold text-center">Settings</h2>
 
                 {/* PROFILE PHOTO */}
@@ -97,7 +97,7 @@ export default function Settings() {
                         className="w-32 h-32 rounded-full object-cover border border-gray-600"
                     />
 
-                    <label className="mt-4 text-[#2f856c] cursor-pointer hover:underline">
+                    <label className="mt-4 text-[#fab400] cursor-pointer hover:underline">
                         Change Photo
                         <input
                             type="file"
@@ -123,7 +123,7 @@ export default function Settings() {
                 <button
                     onClick={handleSave}
                     disabled={loading}
-                    className="w-full bg-[#245346] hover:bg-[#316b5b] p-2 rounded text-white"
+                    className="w-full bg-[#fab400] hover:bg-[#dba51b] p-2 rounded text-zinc-900 font-semibold"
                 >
                     {loading ? "Saving..." : "Save Changes"}
                 </button>
@@ -132,7 +132,7 @@ export default function Settings() {
             {/* LOGOUT BUTTON */}
             <button
                 onClick={handleLogout}
-                className="mt-4 text-[#EF3340] font-bold px-4 py-2 rounded fixed bottom-5 w-[88%] flex justify-center items-center gap-2"
+                className="mt-4 text-[#fa6450] font-bold px-4 py-2 rounded fixed bottom-5 w-[88%] flex justify-center items-center gap-2"
             >
                 <span className="text-lg">Logout</span> <LogOut strokeWidth={3} size={20} />
             </button>

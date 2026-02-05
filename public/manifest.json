@@ -1,6 +1,6 @@
 {
-  "short_name": "ChatApp",
-  "name": "Pookie Chat",
+  "short_name": "QuickPing",
+  "name": "QuickPing",
   "icons": [
     {
       "src": "/icons/icon-192.png",
